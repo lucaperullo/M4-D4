@@ -1,6 +1,6 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav } from "react-bootstrap";
+
 class NavBar extends React.Component {
   render() {
     return (
@@ -10,6 +10,7 @@ class NavBar extends React.Component {
             className="logo"
             src="https://logos-download.com/wp-content/uploads/2016/03/Netflix_logo.png"
             height="25px"
+            alt="logo-img"
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -30,7 +31,7 @@ class NavBar extends React.Component {
                 <img
                   src="./imgs/user.png"
                   height={30}
-                  alt
+                  alt="user-img"
                   className="rounded"
                 />
               </Nav.Link>
