@@ -1,5 +1,5 @@
 import React from "react";
-import ShowComment from "./components/ShowComment";
+import ShowComment from "./ShowComment";
 import { Col, Modal, Button, Container, Row } from "react-bootstrap";
 class MyModal extends React.Component {
   state = {
