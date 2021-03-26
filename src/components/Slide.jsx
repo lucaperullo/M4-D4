@@ -1,9 +1,16 @@
 import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/themes/splide-skyblue.min.css";
+import MyModal from "./MyModal";
 class Slide extends React.Component {
   state = {
     heroMovies: [],
+    selected: null,
+    type: null,
+    title: null,
+    image: null,
+    year: null,
+    modalShow: false,
   };
   componentDidMount = async () => {
     let key = `b0ba7bdf`;
@@ -56,13 +63,29 @@ class Slide extends React.Component {
               width="250"
               src={movie.Poster}
               id={movie.imdbID}
-              alt="Image1"
-              onClick={(e) => {
-                console.log(e.currentTarget.id);
-              }}
+              alt={movie.imdbID}
+              onClick={() =>
+                this.setState({
+                  modalShow: true,
+                  selected: movie.imdbID,
+                  image: movie.Poster,
+                  title: movie.Title,
+                  year: movie.Year,
+                  type: movie.Type,
+                })
+              }
             />
           </SplideSlide>
         ))}
+        <MyModal
+          type={this.state.type}
+          year={this.state.year}
+          title={this.state.title}
+          image={this.state.image}
+          selected={this.state.selected}
+          show={this.state.modalShow}
+          onHide={() => this.setState({ modalShow: false })}
+        />
       </Splide>
     );
   }
