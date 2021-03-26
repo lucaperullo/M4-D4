@@ -4,7 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 class NavBar extends React.Component {
   render() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg">
         <Navbar.Brand>
           <img
             className="logo"
@@ -24,18 +24,33 @@ class NavBar extends React.Component {
             <Nav.Link>Watch again</Nav.Link>
           </Nav>
           <Nav className="mr-sm-2">
-            <Nav.Link>KIDS</Nav.Link>
+            <Nav.Link className="kids">KIDS</Nav.Link>
             <ul>
               <Nav.Link>
-                {" "}
                 <img
-                  src="./imgs/user.png"
+                  src="https://media.discordapp.net/attachments/819321346629566514/825058288768516096/user.png"
                   height={30}
                   alt="user-img"
                   className="rounded"
                 />
               </Nav.Link>
-              <li></li>
+              <li>
+                <div>
+                  <ul>
+                    <li>
+                      <div className="users">
+                        <img
+                          src="https://media.discordapp.net/attachments/819321346629566514/825058288768516096/user.png"
+                          height={30}
+                          alt="user-img"
+                          className="rounded"
+                        />
+                        <p>Gengrit</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
             </ul>
           </Nav>
         </Navbar.Collapse>

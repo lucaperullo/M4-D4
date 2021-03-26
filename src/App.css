@@ -2,8 +2,63 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  background-color: #141414;
+  background-color: #141414 !important;
 }
-.slide {
-  margin-right: 10px;
+.navbar {
+  z-index: 2;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.4902836134453782) 53%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+ul {
+  list-style: none;
+}
+.navbar-nav > .kids {
+  position: absolute;
+  top: 5px;
+  right: 60px;
+}
+.navbar-nav > ul {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+}
+.navbar-nav > ul > li {
+  display: none;
+}
+.navbar-nav > ul:hover > li {
+  display: block !important;
+  position: absolute;
+  top: 60px;
+  right: 5px;
+}
+.users {
+  padding: 10px;
+  display: flex;
+  justify-content: start;
+  height: 340px;
+  width: 200px;
+  background-color: rgba(8, 8, 8, 0.87);
+  display: flex;
+  color: white;
+}
+a {
+  color: white !important;
+}
+a:hover {
+  color: #b3b3b3 !important;
+  cursor: pointer;
+}
+
+.splide__arrow svg {
+  fill: rgb(173, 173, 173) !important;
+}
+.splide__arrow svg:hover {
+  fill: rgb(255, 255, 255) !important;
+  background-color: rgba(161, 161, 161, 0.274);
+  height: 300px;
 }

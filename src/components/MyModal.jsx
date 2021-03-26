@@ -20,6 +20,23 @@ class MyModal extends React.Component {
       },
     });
   };
+  fetchComments = async (id) => {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/${id}`,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDVkOWJlNWI5MTNkOTAwMTU5MzA0OTUiLCJpYXQiOjE2MTY3NDc0OTMsImV4cCI6MTYxNzk1NzA5M30.dGRBTOELc_zweYJ_BjZDDPESsE7wln6nsqVSdprlxDg",
+          },
+        }
+      );
+      const data = await response.json();
+      this.setState({ comments: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   postComment = async (e) => {
     e.preventDefault();
@@ -49,22 +66,13 @@ class MyModal extends React.Component {
       console.log(error);
     }
   };
+  componentDidMount = async () => {
+    await this.fetchComments(this.props.selected);
+  };
 
-  componentDidUpdate = async () => {
-    try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/comments/${this.props.selected}`,
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDVkOWJlNWI5MTNkOTAwMTU5MzA0OTUiLCJpYXQiOjE2MTY3NDc0OTMsImV4cCI6MTYxNzk1NzA5M30.dGRBTOELc_zweYJ_BjZDDPESsE7wln6nsqVSdprlxDg",
-          },
-        }
-      );
-      const data = await response.json();
-      this.setState({ comments: data });
-    } catch (error) {
-      console.log(error);
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (prevProps.selected !== this.props.selected) {
+      await this.fetchComments(this.props.selected);
     }
   };
 
@@ -143,6 +151,7 @@ class MyModal extends React.Component {
                   comment={comment.comment}
                 />
               ))}
+              {this.state.comments.map((comment) => console.log(comment))}
             </Row>
           </Container>
         </Modal.Body>
