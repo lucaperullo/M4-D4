@@ -8,17 +8,15 @@ class MyModal extends React.Component {
       rate: 5,
       elementId: this.props.selected,
     },
-    selected: this.props.selected,
-
     comments: [],
   };
 
   handleInput = (e) => {
-    let id = e.target.id;
+    let id = e.currentTarget.id;
     this.setState({
       commentObj: {
         ...this.state.commentObj,
-        [id]: id === "elementId" ? this.state.selected : e.target.value,
+        [id]: e.currentTarget.value,
       },
     });
   };
@@ -30,7 +28,10 @@ class MyModal extends React.Component {
         "https://striveschool-api.herokuapp.com/api/comments/",
         {
           method: "POST",
-          body: JSON.stringify(this.state.commentObj),
+          body: JSON.stringify({
+            ...this.state.commentObj,
+            elementId: this.props.selected,
+          }),
           headers: {
             "Content-Type": "application/json",
             Authorization:
@@ -41,13 +42,6 @@ class MyModal extends React.Component {
 
       if (response.ok) {
         console.log("comment added");
-        this.setState({
-          comment: {
-            comment: "",
-            rate: 5,
-            elementId: this.props.selected,
-          },
-        });
       } else {
         console.log("Error happened");
       }
@@ -129,8 +123,9 @@ class MyModal extends React.Component {
                       type="text"
                       id="elementId"
                       placeholder="MovieId"
-                      value={this.state.commentObj.elementId}
-                      onChange={this.handleInput}
+                      value={this.props.selected}
+                      // onChange={this.handleInput}
+                      disabled
                     />
                   </Form.Group>
 
