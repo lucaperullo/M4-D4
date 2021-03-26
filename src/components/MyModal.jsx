@@ -1,6 +1,6 @@
 import React from "react";
 import ShowComment from "./ShowComment";
-import { Col, Modal, Button, Container, Row, Form } from "react-bootstrap";
+import { Col, Modal, Button, Container, Row } from "react-bootstrap";
 class MyModal extends React.Component {
   state = {
     commentObj: {
@@ -8,46 +8,29 @@ class MyModal extends React.Component {
       rate: 5,
       elementId: this.props.selected,
     },
-    selected: this.props.selected,
-
     comments: [],
-  };
-
-  handleInput = (e) => {
-    let id = e.target.id;
-    this.setState({
-      commentObj: {
-        ...this.state.commentObj,
-        [id]: id === "elementId" ? this.state.selected : e.target.value,
-      },
-    });
   };
 
   postComment = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/comments/",
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/`,
         {
           method: "POST",
-          body: JSON.stringify(this.state.commentObj),
+          body: JSON.stringify({
+            ...this.state.commentObj,
+            elementId: this.props.selected,
+          }),
           headers: {
-            "Content-Type": "application/json",
+            "Content-type": "application/json",
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDVjOTA2YTFjZmRmMzAwMTVkNjBhYTciLCJpYXQiOjE2MTY2NzkwMTgsImV4cCI6MTYxNzg4ODYxOH0.gHhKFOEEJvurspQQj4MWPwVXrgdzJrL5yM6Q3P3t7Js",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDVkOWJlNWI5MTNkOTAwMTU5MzA0OTUiLCJpYXQiOjE2MTY3NDc0OTMsImV4cCI6MTYxNzk1NzA5M30.dGRBTOELc_zweYJ_BjZDDPESsE7wln6nsqVSdprlxDg",
           },
         }
       );
-
       if (response.ok) {
         console.log("comment added");
-        this.setState({
-          comment: {
-            comment: "",
-            rate: 5,
-            elementId: this.props.selected,
-          },
-        });
       } else {
         console.log("Error happened");
       }
@@ -74,6 +57,15 @@ class MyModal extends React.Component {
     }
   };
 
+  handleInput = (e) => {
+    let id = e.currentTarget.id;
+    this.setState({
+      commentObj: {
+        ...this.state.commentObj,
+        [id]: e.currentTarget.value,
+      }, // commentObj['name']:"ff"
+    });
+  };
   render() {
     return (
       <Modal
@@ -104,40 +96,28 @@ class MyModal extends React.Component {
             <Row>
               <Col xs={12} md={8}>
                 <h6>Add Review :</h6>
-                <Form onSubmit={this.postComment}>
-                  <Form.Group>
-                    <Form.Label>Comment:</Form.Label>
-                    <Form.Control
-                      id="comment"
-                      type="textarea"
-                      rows={3}
-                      placeholder="Write a comment..."
-                      value={this.state.commentObj.comment}
-                      onChange={this.handleInput}
-                    />
-                    <Form.Label>Rating:</Form.Label>
-                    <Form.Control
-                      type="number"
-                      max={5}
-                      id="rate"
-                      placeholder="Rate book"
-                      value={this.state.commentObj.rate}
-                      onChange={this.handleInput}
-                    />
-                    <Form.Label>Id:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      id="elementId"
-                      placeholder="MovieId"
-                      value={this.state.commentObj.elementId}
-                      onChange={this.handleInput}
-                    />
-                  </Form.Group>
+                <form onSubmit={this.postComment}>
+                  <textarea
+                    id="comment"
+                    cols={45}
+                    onChange={this.handleInput}
+                    rows={12}
+                  ></textarea>
 
-                  <Button variant="primary" type="submit">
-                    Add Comment
-                  </Button>
-                </Form>
+                  <input
+                    onChange={this.handleInput}
+                    id="rate"
+                    type="number"
+                    max={5}
+                  ></input>
+                  <input
+                    type="text"
+                    id="elementId"
+                    value={this.props.selected}
+                    onChange={this.handleInput}
+                  ></input>
+                  <button type="submit">Add Comment</button>
+                </form>
               </Col>
               <Col xs={12} md={4}></Col>
             </Row>

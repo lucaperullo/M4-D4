@@ -5,6 +5,7 @@ class ShowComment extends React.Component {
     return (
       <div>
         <p>{this.props.comment}</p>
+        <br />
       </div>
     );
   }
