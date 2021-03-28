@@ -4,6 +4,14 @@ html {
 body {
   background-color: #141414 !important;
 }
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+a {
+  user-select: none;
+  -webkit-user-drag: none;
+}
 .navbar {
   z-index: 2;
   background: rgb(0, 0, 0);
@@ -22,6 +30,30 @@ ul {
   top: 5px;
   right: 60px;
 }
+.navbar-nav > .searchLink > input {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 120px;
+}
+.navbar-nav > .searchLink:hover > input {
+  display: block;
+}
+.navbar-nav > .searchLink > .searchIcon {
+  transition: 0.25s ease;
+  color: white;
+  position: absolute;
+  top: 17px;
+  right: 124px;
+}
+
+.navbar-nav > .searchLink:hover > .searchIcon {
+  z-index: 1;
+  color: black;
+  position: absolute;
+  top: 17px;
+  right: 150px;
+}
 .navbar-nav > ul {
   position: absolute;
   top: 2px;
@@ -36,10 +68,14 @@ ul {
   top: 60px;
   right: 5px;
 }
+.usersContainer {
+  display: flex;
+  flex-direction: column;
+}
 .users {
   padding: 10px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   height: 340px;
   width: 200px;
   background-color: rgba(8, 8, 8, 0.87);
