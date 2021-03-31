@@ -98,3 +98,9 @@ a:hover {
   background-color: rgba(161, 161, 161, 0.274);
   height: 300px;
 }
+.slideOptions {
+  display: none;
+}
+.splide__slide:hover > .slideOptions {
+  display: block;
+}

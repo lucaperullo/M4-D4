@@ -5,7 +5,7 @@ import "@splidejs/splide/dist/css/themes/splide-skyblue.min.css";
 import MyModal from "./MyModal";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { ImSearch } from "react-icons/im";
-
+import { BrowserRouter as Router, Link } from "react-router-dom";
 class NavBar extends React.Component {
   state = {
     spiderMan: [],
@@ -19,7 +19,7 @@ class NavBar extends React.Component {
     image: null,
     year: null,
     modalShow: false,
-    searchResults: [],
+    searchResults: null,
   };
 
   getData = async (e) => {
@@ -63,7 +63,7 @@ class NavBar extends React.Component {
                 <ImSearch className="searchIcon" />
 
                 <input
-                  onSubmit={this.getData}
+                  onClick={this.getData}
                   type="text"
                   placeholder="search.."
                 ></input>
@@ -113,47 +113,55 @@ class NavBar extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Container>
-          <Splide
-            options={{
-              rewind: true,
-              autoplay: true,
-              interval: 500,
-              perPage: 6,
-              gap: "1em",
-              pagination: false,
-              drag: true,
-              focus: 0,
-              perMove: 3,
-              breakpoints: {
-                1583: {
-                  perPage: 5,
+        <Container fluid>
+          {this.state.searchResults ? (
+            <Splide
+              options={{
+                type: "loop",
+                autoplay: true,
+                speed: 35000,
+                interval: 100,
+                perPage: 6,
+                gap: "1em",
+                pagination: false,
+                drag: true,
+                focus: 0,
+                perMove: 3,
+                breakpoints: {
+                  1583: {
+                    perPage: 5,
+                  },
+                  1483: {
+                    perPage: 4,
+                  },
+                  1020: {
+                    perPage: 3,
+                  },
+                  763: {
+                    perPage: 2,
+                  },
+                  514: {
+                    perPage: 1,
+                  },
                 },
-                1483: {
-                  perPage: 4,
-                },
-                1020: {
-                  perPage: 3,
-                },
-                763: {
-                  perPage: 2,
-                },
-                514: {
-                  perPage: 1,
-                },
-              },
-            }}
-          >
-            {console.log(this.state.searchResults.length)}
-            {this.state.searchResults.length > 0
-              ? this.state.searchResults.map((movie) => (
-                  <SplideSlide key={movie.imdbID}>
-                    <img
-                      height="300"
-                      width="250"
-                      src={movie.Poster}
-                      id={movie.imdbID}
-                      alt={movie.imdbID}
+              }}
+            >
+              {this.state.searchResults.map((movie) => (
+                <SplideSlide key={movie.imdbID}>
+                  <img
+                    className="slideImg"
+                    height="300"
+                    width="250"
+                    src={movie.Poster}
+                    id={movie.imdbID}
+                    alt={movie.imdbID}
+                  />
+                  <div className="slideOptions">
+                    <Link to={"/details/" + movie.imdbID}>
+                      <button>details</button>
+                    </Link>
+
+                    <button
                       onClick={() =>
                         this.setState({
                           modalShow: true,
@@ -164,20 +172,25 @@ class NavBar extends React.Component {
                           type: movie.Type,
                         })
                       }
-                    />
-                  </SplideSlide>
-                ))
-              : console.log("search something!")}
-            <MyModal
-              type={this.state.type}
-              year={this.state.year}
-              title={this.state.title}
-              image={this.state.image}
-              selected={this.state.selected}
-              show={this.state.modalShow}
-              onHide={() => this.setState({ modalShow: false })}
-            />
-          </Splide>
+                    >
+                      reviews
+                    </button>
+                  </div>
+                </SplideSlide>
+              ))}
+              <MyModal
+                type={this.state.type}
+                year={this.state.year}
+                title={this.state.title}
+                image={this.state.image}
+                selected={this.state.selected}
+                show={this.state.modalShow}
+                onHide={() => this.setState({ modalShow: false })}
+              />
+            </Splide>
+          ) : (
+            console.log("Secret message!")
+          )}
         </Container>
       </>
     );
